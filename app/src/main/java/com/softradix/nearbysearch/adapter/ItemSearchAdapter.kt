@@ -7,7 +7,7 @@ import com.softradix.nearbysearch.data.Businesse
 import com.softradix.nearbysearch.databinding.SearchItemLayoutBinding
 import com.softradix.nearbysearch.utils.loadImageWithoutShimmer
 
-class ItemSearchAdapter(var itemList: ArrayList<Businesse>) :
+class ItemSearchAdapter(var itemList: List<Businesse>) :
     RecyclerView.Adapter<ItemSearchAdapter.ItemHolder>() {
 
     private lateinit var bindiing: SearchItemLayoutBinding

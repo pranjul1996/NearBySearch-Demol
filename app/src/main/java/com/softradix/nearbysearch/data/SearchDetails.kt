@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
 data class SearchDetails(
 
     @SerializedName("businesses")
-    val businesses: ArrayList<Businesse>,
+    val businesses: List<Businesse>,
     @Embedded
     @SerializedName("region")
     val region: Region,

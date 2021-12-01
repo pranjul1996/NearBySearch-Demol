@@ -1,6 +1,9 @@
 package com.softradix.nearbysearch.ui.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.softradix.nearbysearch.adapter.ItemSearchAdapter
 import com.softradix.nearbysearch.base.BaseFragment
 import com.softradix.nearbysearch.data.Businesse
-import com.softradix.nearbysearch.data.SearchDetails
 import com.softradix.nearbysearch.databinding.FragmentSearchBinding
 import com.softradix.nearbysearch.utils.Constants
-import com.softradix.nearbysearch.utils.Utilities.hideInternetDialog
 import com.softradix.nearbysearch.utils.Utilities.isNetworkAvailable
 import com.softradix.nearbysearch.utils.makeGone
 import com.softradix.nearbysearch.utils.makeVisible
@@ -30,6 +31,7 @@ class SearchFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         mViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
+        netCheckData()
         attachObservers()
     }
 
@@ -45,20 +47,16 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listeners()
-        netCheckData()
         setRecyclerView()
+
     }
 
-    private fun netCheckData(){
-        if(isNetworkAvailable(requireActivity())){
-            mViewModel.getSearchResult(
-                null,
-                "111 Sutter St, San Francisco, xCA"
-            )
-
-        }else{
-            mViewModel.getData()
-        }
+    private fun netCheckData() {
+        mViewModel.getSearchResult(
+            null,
+            "111 Sutter St, San Francisco, xCA", requireActivity()
+        )
+        mViewModel.getAll()
     }
 
     private fun setRecyclerView() {
@@ -78,8 +76,10 @@ class SearchFragment : BaseFragment() {
             } else {
                 mViewModel.getSearchResult(
                     binding.searchEt.text.toString(),
-                    "111 Sutter St, San Francisco, xCA"
+                    "111 Sutter St, San Francisco, xCA", requireActivity()
                 )
+                mViewModel.getAll()
+
             }
         }
 
@@ -87,17 +87,20 @@ class SearchFragment : BaseFragment() {
         binding.swipeRefresh.setOnRefreshListener {
             mViewModel.getSearchResult(
                 binding.searchEt.text.toString(),
-                "111 Sutter St, San Francisco, xCA"
+                "111 Sutter St, San Francisco, xCA", requireActivity()
             )
+            mViewModel.getAll()
             binding.swipeRefresh.isRefreshing = false
         }
+
     }
 
     private fun attachObservers() {
-        mViewModel.searchResponse.observe(this) { response ->
+
+        mViewModel.searchResponseGet.observe(this) { response ->
             response?.let {
                 itemList.clear()
-                itemList.addAll(it.businesses)
+                itemList.addAll(it)
                 itemSearchAdapter?.notifyDataSetChanged()
                 if (itemList.isEmpty()) binding.noDataText.makeVisible() else binding.noDataText.makeGone()
             }
@@ -118,12 +121,7 @@ class SearchFragment : BaseFragment() {
                 }
             }
         }
-        mViewModel.searchResponseGet.observe(this){
-            itemList.clear()
-            itemList.addAll(it)
-            itemSearchAdapter?.notifyDataSetChanged()
-            if (itemList.isEmpty()) binding.noDataText.makeVisible() else binding.noDataText.makeGone()
-        }
+
     }
 
 }

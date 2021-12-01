@@ -11,7 +11,7 @@ import com.softradix.nearbysearch.data.SearchDetails
 @Dao
 interface SearchDao {
     @Query("SELECT * FROM table_data")
-    suspend fun getAll(): List<Businesse>
+    fun getAll(): List<Businesse>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(businesse: Businesse?)
