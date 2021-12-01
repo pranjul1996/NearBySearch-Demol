@@ -3,10 +3,11 @@ package com.softradix.nearbysearch.room
 import android.content.Context
 import androidx.room.*
 import com.softradix.nearbysearch.data.SearchDetails
+import com.softradix.nearbysearch.utils.Constants
 
 @Database(
     entities = [SearchDetails::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Convertors::class)
@@ -17,15 +18,13 @@ abstract class SearchDataBase : RoomDatabase() {
     companion object {
         var roomDb: SearchDataBase? = null
 
-        fun getSearchDb(context: Context?): SearchDataBase? {
-            roomDb = context?.let {
-                Room.databaseBuilder(
-                    it,
-                    SearchDataBase::class.java, "search_new_items.db"
-                ).fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
-                    .build()
-            }
+        fun getSearchDb(context: Context): SearchDataBase? {
+            roomDb = Room.databaseBuilder(
+                context,
+                SearchDataBase::class.java, Constants.DATABASE_NAME
+            ).fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build()
             return roomDb
         }
     }

@@ -9,7 +9,7 @@ import com.softradix.nearbysearch.data.SearchDetails
 
 @Dao
 interface SearchDao {
-    @Query("SELECT * FROM new_search_table")
+    @Query("SELECT * FROM table_data")
     suspend fun getAll(): SearchDetails
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

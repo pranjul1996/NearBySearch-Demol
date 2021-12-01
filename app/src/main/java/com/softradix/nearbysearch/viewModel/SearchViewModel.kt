@@ -1,6 +1,7 @@
 package com.softradix.nearbysearch.viewModel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.softradix.nearbysearch.application.NearByApp
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 class SearchViewModel : MyViewModel() {
 
     val searchResponse = MutableLiveData<SearchDetails>()
+    val searchResponseGet = MutableLiveData<SearchDetails>()
     private val dao = NearByApp.roomDatabase?.searchDao()
 
     fun getSearchResult(term: String?, location: String?) {
@@ -21,8 +23,9 @@ class SearchViewModel : MyViewModel() {
             successHandler = {
                 isLoading.value = false
                 searchResponse.value = it
-                insert()
-
+                viewModelScope.launch(Dispatchers.IO){
+                    dao?.insertAll(searchResponse.value)
+                }
             },
             errorBody = {
                 isLoading.value = false
@@ -36,9 +39,14 @@ class SearchViewModel : MyViewModel() {
         )
     }
 
-    fun insert() = viewModelScope.launch(Dispatchers.IO){
-        dao?.insertAll(searchResponse.value)
-
+    fun getAll(){
+        viewModelScope.launch(Dispatchers.IO){
+            searchResponseGet.value = if(dao?.getAll() == null){
+                dao?.getAll()!!
+            } else{
+                null
+            }
+        }
     }
 
 }

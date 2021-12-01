@@ -37,7 +37,7 @@ android {
 ext.retrofitVersion = "2.9.0"
 ext.glideVersion = "4.12.0"
 ext.nav_version = "2.3.5"
-ext.roomVersion = "2.3.0"
+ext.roomVersion = "2.4.0-beta02"
 
 dependencies {
 
@@ -48,14 +48,15 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
 
     //spinKit
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
 
 
-    implementation ("androidx.room:room-runtime:$roomVersion")
-    kapt ("androidx.room:room-compiler:$roomVersion")
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 //    google maps
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.google.android.gms:play-services-maps:18.0.0'

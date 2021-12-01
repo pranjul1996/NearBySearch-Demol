@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.softradix.nearbysearch.adapter.ItemSearchAdapter
 import com.softradix.nearbysearch.base.BaseFragment
 import com.softradix.nearbysearch.data.Businesse
+import com.softradix.nearbysearch.data.SearchDetails
 import com.softradix.nearbysearch.databinding.FragmentSearchBinding
 import com.softradix.nearbysearch.utils.Constants
+import com.softradix.nearbysearch.utils.Utilities.hideInternetDialog
+import com.softradix.nearbysearch.utils.Utilities.isNetworkAvailable
 import com.softradix.nearbysearch.utils.makeGone
 import com.softradix.nearbysearch.utils.makeVisible
 import com.softradix.nearbysearch.utils.toast
@@ -43,12 +46,18 @@ class SearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         listeners()
+        netCheckData()
+    }
 
-        mViewModel.getSearchResult(
-            null,
-            "111 Sutter St, San Francisco, xCA"
-        )
-
+    private fun netCheckData(){
+        if(!isNetworkAvailable(requireActivity())){
+            mViewModel.getAll()
+        }else{
+            mViewModel.getSearchResult(
+                null,
+                "111 Sutter St, San Francisco, xCA"
+            )
+        }
     }
 
     private fun setRecyclerView() {
@@ -89,7 +98,6 @@ class SearchFragment : BaseFragment() {
                 itemList.clear()
                 itemList.addAll(it.businesses)
                 itemSearchAdapter?.notifyDataSetChanged()
-
                 if (itemList.isEmpty()) binding.noDataText.makeVisible() else binding.noDataText.makeGone()
             }
             mViewModel.apiError.observe(this) {
@@ -108,6 +116,12 @@ class SearchFragment : BaseFragment() {
                     showLoading(it)
                 }
             }
+        }
+        mViewModel.searchResponseGet.observe(this){
+            itemList.clear()
+            itemList.addAll(it.businesses)
+            itemSearchAdapter?.notifyDataSetChanged()
+            if (itemList.isEmpty()) binding.noDataText.makeVisible() else binding.noDataText.makeGone()
         }
     }
 

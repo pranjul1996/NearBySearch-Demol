@@ -33,13 +33,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        mInterNetCheckReceiver =
-            NetworkChangeReceiver()      // register check internet broadcast receiver
-        @Suppress("DEPRECATION")
-        registerReceiver(
-            mInterNetCheckReceiver,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )
+//        mInterNetCheckReceiver =
+//            NetworkChangeReceiver()      // register check internet broadcast receiver
+//        @Suppress("DEPRECATION")
+//        registerReceiver(
+//            mInterNetCheckReceiver,
+//            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+//        )
         if (isLocationEnabled() && checkPermissions()) {
             getLocationUpdate()
         } else {
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(mInterNetCheckReceiver)
+//        unregisterReceiver(mInterNetCheckReceiver)
     }
 
 }

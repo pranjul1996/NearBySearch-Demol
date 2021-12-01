@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 
-@Entity(tableName = "new_search_table")
+@Entity(tableName = "table_data")
 data class SearchDetails(
 
     @SerializedName("businesses")

@@ -2,8 +2,11 @@ package com.softradix.nearbysearch.data
 
 
 import androidx.room.Embedded
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
+
+@Entity
 data class Businesse(
     @SerializedName("alias")
     val alias: String,
