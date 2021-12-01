@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NearBySearch</string>
+    <string name="search">Search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="turn_on">Please turn on</string>
+    <string name="no_internet_title">No Internet</string>
+    <string name="no_internet_body">You\'re not connected to the Internet.\nPlease connect and retry.</string>
+    <string name="nothing_found">Nothing found!</string>
+</resources>
