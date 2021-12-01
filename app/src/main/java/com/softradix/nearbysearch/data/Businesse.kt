@@ -1,6 +1,7 @@
 package com.softradix.nearbysearch.data
 
 
+import androidx.room.Embedded
 import com.google.gson.annotations.SerializedName
 
 data class Businesse(
@@ -8,6 +9,7 @@ data class Businesse(
     val alias: String,
     @SerializedName("categories")
     val categories: List<Category>,
+    @Embedded
     @SerializedName("coordinates")
     val coordinates: Coordinates,
     @SerializedName("display_phone")
@@ -20,6 +22,7 @@ data class Businesse(
     val imageUrl: String,
     @SerializedName("is_closed")
     val isClosed: Boolean,
+    @Embedded
     @SerializedName("location")
     val location: Location,
     @SerializedName("name")

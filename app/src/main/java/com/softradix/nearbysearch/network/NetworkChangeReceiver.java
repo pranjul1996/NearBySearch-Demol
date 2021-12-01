@@ -3,9 +3,6 @@ package com.softradix.nearbysearch.network;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
-import com.softradix.nearbysearch.room.Location;
-import com.softradix.nearbysearch.utils.LocationService;
 import com.softradix.nearbysearch.utils.Utilities;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {

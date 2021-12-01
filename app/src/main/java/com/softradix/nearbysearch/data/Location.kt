@@ -7,9 +7,9 @@ data class Location(
     @SerializedName("address1")
     val address1: String,
     @SerializedName("address2")
-    val address2: Any,
+    val address2: String?,
     @SerializedName("address3")
-    val address3: Any,
+    val address3: String?,
     @SerializedName("city")
     val city: String,
     @SerializedName("country")

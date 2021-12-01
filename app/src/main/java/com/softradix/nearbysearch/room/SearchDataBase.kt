@@ -1,16 +1,15 @@
 package com.softradix.nearbysearch.room
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import com.softradix.nearbysearch.data.SearchDetails
 
 @Database(
-    entities = [Response::class],
+    entities = [SearchDetails::class],
     version = 1,
     exportSchema = false
 )
-
+@TypeConverters(Convertors::class)
 abstract class SearchDataBase : RoomDatabase() {
     abstract fun searchDao(): SearchDao
 
@@ -18,13 +17,15 @@ abstract class SearchDataBase : RoomDatabase() {
     companion object {
         var roomDb: SearchDataBase? = null
 
-        fun getSearchDb(context: Context): SearchDataBase? {
-            roomDb = Room.databaseBuilder(
-                context,
-                SearchDataBase::class.java, "search_items.db"
-            ).fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build()
+        fun getSearchDb(context: Context?): SearchDataBase? {
+            roomDb = context?.let {
+                Room.databaseBuilder(
+                    it,
+                    SearchDataBase::class.java, "search_new_items.db"
+                ).fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
+                    .build()
+            }
             return roomDb
         }
     }
