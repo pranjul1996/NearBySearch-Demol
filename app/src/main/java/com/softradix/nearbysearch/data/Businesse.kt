@@ -3,10 +3,11 @@ package com.softradix.nearbysearch.data
 
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 
-@Entity
+@Entity(tableName = "table_data")
 data class Businesse(
     @SerializedName("alias")
     val alias: String,
@@ -19,6 +20,7 @@ data class Businesse(
     val displayPhone: String,
     @SerializedName("distance")
     val distance: Double,
+    @PrimaryKey
     @SerializedName("id")
     val id: String,
     @SerializedName("image_url")
@@ -33,7 +35,7 @@ data class Businesse(
     @SerializedName("phone")
     val phone: String,
     @SerializedName("price")
-    val price: String,
+    val price: String?,
     @SerializedName("rating")
     val rating: Double,
     @SerializedName("review_count")

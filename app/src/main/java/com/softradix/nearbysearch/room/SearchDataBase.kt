@@ -2,15 +2,16 @@ package com.softradix.nearbysearch.room
 
 import android.content.Context
 import androidx.room.*
+import com.softradix.nearbysearch.data.Businesse
 import com.softradix.nearbysearch.data.SearchDetails
 import com.softradix.nearbysearch.utils.Constants
 
 @Database(
-    entities = [SearchDetails::class],
-    version = 3,
+    entities = [Businesse::class],
+    version = 2,
     exportSchema = false
 )
-@TypeConverters(Convertors::class)
+@TypeConverters(ConvertorsBusinesse::class)
 abstract class SearchDataBase : RoomDatabase() {
     abstract fun searchDao(): SearchDao
 

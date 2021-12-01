@@ -44,19 +44,20 @@ class SearchFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setRecyclerView()
         listeners()
         netCheckData()
+        setRecyclerView()
     }
 
     private fun netCheckData(){
-        if(!isNetworkAvailable(requireActivity())){
-            mViewModel.getAll()
-        }else{
+        if(isNetworkAvailable(requireActivity())){
             mViewModel.getSearchResult(
                 null,
                 "111 Sutter St, San Francisco, xCA"
             )
+
+        }else{
+            mViewModel.getData()
         }
     }
 
@@ -119,7 +120,7 @@ class SearchFragment : BaseFragment() {
         }
         mViewModel.searchResponseGet.observe(this){
             itemList.clear()
-            itemList.addAll(it.businesses)
+            itemList.addAll(it)
             itemSearchAdapter?.notifyDataSetChanged()
             if (itemList.isEmpty()) binding.noDataText.makeVisible() else binding.noDataText.makeGone()
         }

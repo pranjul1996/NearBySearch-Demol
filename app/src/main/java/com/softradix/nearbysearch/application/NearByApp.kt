@@ -11,14 +11,16 @@ class NearByApp : Application() {
   companion object{
       var roomDatabase: SearchDataBase? = null
 
+
   }
+
+    init {
+
+    }
     override fun onCreate() {
         super.onCreate()
         roomDatabase = SearchDataBase.getSearchDb(this)
         Preferences.initPreferences(this)
     }
-
-
-
 
 }
